@@ -2,7 +2,6 @@ from unittest.mock import patch, MagicMock
 from app.main import cryptocurrency_action
 
 
-
 @patch("app.main.get_exchange_rate_prediction")
 def test_func_returns_correct_values(
     mocked_func: MagicMock
@@ -17,7 +16,8 @@ def test_func_returns_correct_values1(
 ) -> None:
     mocked_func.return_value = 105.001
     assert cryptocurrency_action(100) == "Buy more cryptocurrency"
-    
+
+
 @patch("app.main.get_exchange_rate_prediction")
 def test_func_returns_correct_values2(
     mocked_func: MagicMock
