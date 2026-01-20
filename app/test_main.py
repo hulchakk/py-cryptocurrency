@@ -4,26 +4,26 @@ from typing import Any, Callable
 
 from app.main import cryptocurrency_action
 
-
 @pytest.fixture()
-def mocked_func() -> Any:
+def mocked_func():
     with mock.patch("app.main.get_exchange_rate_prediction") as func:
+        func.return_value = 50
         yield func
 
-
-@pytest.mark.parametrize(
-    "rate,prediction,expected",
-    [
-        (1, 6, "Buy more cryptocurrency"),
-        (6, 1, "Sell all your cryptocurrency"),
-        (6, 6 , "Do nothing")
-    ]
-)
-def test_func_returns_correct_values(
-    rate: int,
-    prediction: int,
-    expected: str,
-    mocked_func: Callable
+def test_func_returns_correct_values1(
+    mocked_func
 ) -> None:
-    mocked_func.return_value = prediction
-    assert cryptocurrency_action(rate) == expected
+    assert cryptocurrency_action(45) == "Do nothing"
+
+
+def test_func_returns_correct_values2(
+    mocked_func
+) -> None:
+    assert cryptocurrency_action(44.9) == "Buy more cryptocurrency"
+
+
+def test_func_returns_correct_values3(
+    mocked_func
+) -> None:
+    assert cryptocurrency_action(55.1) == "Sell all your cryptocurrency"
+
